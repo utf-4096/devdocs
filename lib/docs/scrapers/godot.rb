@@ -21,6 +21,12 @@ module Docs
       Licensed under the Creative Commons Attribution Unported License v3.0.
     HTML
 
+    version '4.4' do
+      self.release = '4.4.1'
+      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
+      html_filters.push 'godot/entries', 'godot/clean_html', 'sphinx/clean_html'
+    end
+
     version '4.3' do
       self.release = '4.3.0'
       self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
