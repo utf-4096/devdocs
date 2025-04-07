@@ -2,55 +2,32 @@ module Docs
   class Symfony
     class EntriesFilter < Docs::EntriesFilter
       def get_name
-        name = at_css('h1').content.strip
-        name.remove! 'Symfony\\'
-        name << " (#{namespace})" if name.gsub! "#{namespace}\\", ''
-        name
+        at_css('h1').text.strip
       end
 
       def get_type
-        return 'Exceptions' if slug =~ /exception/i
-        return 'Testing' if slug =~ /test/i
-        namespace
-      end
+        crumbs = []
 
-      def namespace
-        @namespace ||= begin
-          path = slug.remove('Symfony/').remove(/\/\w+?\z/).split('/')
-          upto = 1
-          upto = 2 if path[1] == 'Form' && path[2] == 'Extension'
-          upto = 2 if path[1] == 'HttpFoundation' && path[2] == 'Session'
-          path[0..upto].join('\\')
+        css('.breadcrumb-item a').each_with_index do |node, index|
+          next if index < 2
+          crumbs << node.text.strip
+        end
+
+        if crumbs.length == 0
+          'Symfony'
+        else
+          crumbs.join '/'
         end
       end
-
-      IGNORE_METHODS = %w(get set)
 
       def additional_entries
-        return [] if initial_page?
-        return [] if type == 'Exceptions'
-        return [] if self.name.include?('Legacy') || self.name.include?('Loader')
+        css('.list-of-contents').each_with_object [] do |node, entries|
+          type = node.at_css('h2').text
 
-        entries = []
-        base_name = self.name.remove(/\(.+\)/).strip
-
-        css('h3[id^="method_"]').each do |node|
-          next if node.at_css('.location').content.start_with?('in')
-
-          name = node['id'].remove('method_')
-          next if name.start_with?('_') || IGNORE_METHODS.include?(name)
-
-          name.prepend "#{base_name}::"
-          name << "() (#{namespace})"
-
-          entries << [name, node['id']]
+          node.css('li a').each do |n|
+            entries << [n.text.strip, n['id'], node.text.strip]
+          end
         end
-
-        entries.size > 1 ? entries : []
-      end
-
-      def include_default_entry?
-        !initial_page?
       end
     end
   end

@@ -2,34 +2,16 @@ module Docs
   class Symfony
     class CleanHtmlFilter < Filter
       def call
-        @doc = at_css('#page-content')
+        @doc = at_css('#main-content')
 
-        css('.location', '.no-description').remove
-
-        css('.page-header > h1').each do |node|
-          node.content = 'Symfony' if root_page?
-          node.parent.before(node).remove
-        end
-
-        css('div.details').each do |node|
-          node.before(node.children).remove
-        end
-
-        css('a > abbr').each do |node|
-          node.parent['title'] = node['title']
-          node.before(node.children).remove
-        end
-
-        css('h1 > a', '.content', 'h3 > code', 'h3 strong', 'abbr', 'div.method-item', 'div.method-description', 'div.tags').each do |node|
-          node.before(node.children).remove
-        end
-
-        css('.container-fluid').each do |node|
-          html = node.inner_html
-          html.gsub! %r{<div class="col[^>]+>(.+?)</div>}, '<td>\1</td>'
-          html.gsub! %r{<div class="row[^>]+>(.+?)</div>}, '<tr>\1</tr>'
-          node.replace("<table>#{html}</table>")
-        end
+        css('aside.sidebar-right').remove
+        css('.admonition-screencast').remove
+        css('.doc-sidebar-search').remove
+        css('.doc-alternative-selector').remove
+        css('.doc-index-highlights').remove
+        css('.doc-index-extra-resources').remove
+        css('.content>.d-md-flex.align-items-start.justify-content-between').remove
+        css('#doc-mobile-shortcuts-bar').remove
 
         doc
       end
