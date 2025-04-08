@@ -12,6 +12,8 @@ module Docs
         css('.doc-index-extra-resources').remove
         css('.content>.d-md-flex.align-items-start.justify-content-between').remove
         css('#doc-mobile-shortcuts-bar').remove
+        css('.codeblock-lines').remove
+        css('.content-edit').remove
 
         doc
       end
