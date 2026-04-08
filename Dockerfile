@@ -18,6 +18,10 @@ RUN bundle config set path.system true && \
 COPY . /devdocs
 
 RUN thor docs:download --all && \
+    yes | thor docs:generate godot@4.6 && \
+    yes | thor docs:generate godot@4.5 && \
+    yes | thor docs:generate godot@4.4 && \
+    yes | thor docs:generate symfony && \
     thor assets:compile && \
     rm -rf /tmp
 
