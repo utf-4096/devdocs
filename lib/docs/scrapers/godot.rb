@@ -39,18 +39,6 @@ module Docs
       html_filters.push 'godot/entries', 'godot/clean_html', 'sphinx/clean_html'
     end
 
-    version '4.3' do
-      self.release = '4.3.0'
-      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
-      html_filters.push 'godot/entries', 'godot/clean_html', 'sphinx/clean_html'
-    end
-
-    version '4.2' do
-      self.release = '4.2.2'
-      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
-      html_filters.push 'godot/entries', 'godot/clean_html', 'sphinx/clean_html'
-    end
-
     version '3.5' do
       self.release = '3.5.3'
       self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
@@ -64,26 +52,6 @@ module Docs
       self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
 
       options[:container] = '.document > [itemprop="articleBody"] > section[id]'
-      html_filters.push 'godot/entries_v3', 'godot/clean_html_v3', 'sphinx/clean_html'
-    end
-
-    version '3.3' do
-      self.release = '3.3.0'
-      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
-      self.initial_paths = %w[/index.html]
-
-      options[:only_patterns] = [%r{\Aclasses/}]
-      options[:container] = '.document .section'
-      html_filters.push 'godot/entries_v3', 'godot/clean_html_v3', 'sphinx/clean_html'
-    end
-
-    version '3.2' do
-      self.release = '3.2.3'
-      self.base_url = "https://docs.godotengine.org/en/#{self.version}/"
-      self.initial_paths = %w[/index.html]
-
-      options[:only_patterns] = [%r{\Aclasses/}]
-      options[:container] = '.document .section'
       html_filters.push 'godot/entries_v3', 'godot/clean_html_v3', 'sphinx/clean_html'
     end
 
